@@ -18,6 +18,8 @@ qdrant-client
 sqlalchemy
 psycopg[binary]
 
+email-validator
+
 # Redis
 redis
 

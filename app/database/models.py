@@ -8,6 +8,7 @@ from sqlalchemy import (
     Text
 )
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import UniqueConstraint
 
 from app.database.database import Base
 
@@ -48,8 +49,16 @@ class Document(Base):
     )
 
 
+
 class Booking(Base):
     __tablename__ = "bookings"
+
+    __table_args__ = (
+        UniqueConstraint(
+            "session_id",
+            name="uq_bookings_session_id"
+        ),
+    )
 
     id: Mapped[int] = mapped_column(
         Integer,
@@ -83,6 +92,12 @@ class Booking(Base):
         nullable=False
     )
 
+    timezone_name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+        default="Asia/Kathmandu"
+    )
+
     status: Mapped[str] = mapped_column(
         String(30),
         default="pending",
@@ -91,5 +106,6 @@ class Booking(Base):
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc)
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False
     )

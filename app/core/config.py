@@ -13,6 +13,8 @@ class Settings(BaseSettings):
 
     EMBEDDING_MODEL: str
 
+    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
