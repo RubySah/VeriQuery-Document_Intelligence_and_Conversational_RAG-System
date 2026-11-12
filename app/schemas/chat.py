@@ -1,7 +1,8 @@
 
-from pydantic import BaseModel, Field
-
 from uuid import UUID
+
+from pydantic import BaseModel, Field, field_validator
+
 
 class ChatRequest(BaseModel):
     question: str = Field(
@@ -16,6 +17,16 @@ class ChatRequest(BaseModel):
         gt=0
     )
 
+    @field_validator("question")
+    @classmethod
+    def validate_question(cls, value: str) -> str:
+        value = value.strip()
+
+        if not value:
+            raise ValueError("Question cannot be empty.")
+
+        return value
+
 
 class SourceResponse(BaseModel):
     document_id: int
@@ -25,8 +36,10 @@ class SourceResponse(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    session_id: str
+    session_id: UUID
     question: str
     search_query: str
     answer: str
-    sources: list[SourceResponse]
+    sources: list[SourceResponse] = Field(
+        default_factory=list
+    )

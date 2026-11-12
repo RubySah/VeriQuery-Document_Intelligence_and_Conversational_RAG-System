@@ -1,4 +1,4 @@
-import fitz
+import pymupdf
 
 
 def extract_text(file_bytes: bytes, file_extension: str) -> str:
@@ -7,7 +7,7 @@ def extract_text(file_bytes: bytes, file_extension: str) -> str:
     """
 
     if file_extension == ".pdf":
-        with fitz.open(stream=file_bytes, filetype="pdf") as pdf:
+        with pymupdf.open(stream=file_bytes, filetype="pdf") as pdf:
             pages = [
                 page.get_text()
                 for page in pdf

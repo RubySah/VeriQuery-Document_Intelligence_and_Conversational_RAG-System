@@ -1,0 +1,904 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d1b">
+    <meta name="description" content="Palm Mind is an AI-powered document intelligence backend with conversational RAG, semantic search, and interview booking capabilities.">
+
+    <title>Palm Mind | AI Document Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --background: #080d1b;
+            --surface: #10182a;
+            --surface-light: #151f34;
+            --border: rgba(148, 163, 184, 0.15);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --accent: #8b7cff;
+            --cyan: #4dd9e8;
+            --green: #4ade80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(8, 13, 27, 0.88);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 21px;
+            letter-spacing: -0.7px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 19px;
+            background: linear-gradient(135deg, #7867ff, #39c9e4);
+            box-shadow: 0 5px 25px rgba(120, 103, 255, 0.25);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-button {
+            padding: 10px 17px;
+            border-radius: 9px;
+            background: #7565ef;
+            color: white !important;
+            transition: 0.2s;
+        }
+
+        .nav-button:hover {
+            background: #8b7cff;
+            transform: translateY(-2px);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 105px 0 85px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 450px;
+            background: rgba(108, 88, 255, 0.15);
+            filter: blur(120px);
+            border-radius: 50%;
+            top: -190px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            border: 1px solid rgba(139, 124, 255, 0.35);
+            background: rgba(139, 124, 255, 0.09);
+            color: #b8adff;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 27px;
+        }
+
+        .status-dot {
+            height: 7px;
+            width: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(42px, 7vw, 72px);
+            line-height: 1.08;
+            letter-spacing: -3px;
+            font-weight: 700;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .gradient-text {
+            background: linear-gradient(100deg, #a69aff 15%, #61d9e8 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            color: var(--muted);
+            max-width: 650px;
+            margin: 25px auto 32px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 13px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 21px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .button-primary {
+            background: #7868f2;
+            color: white;
+            box-shadow: 0 8px 25px rgba(120, 104, 242, 0.2);
+        }
+
+        .button-primary:hover {
+            background: #9183ff;
+            transform: translateY(-3px);
+        }
+
+        .button-secondary {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            color: var(--text);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* TECH STACK */
+
+        .tech-strip {
+            padding: 25px 0 55px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tech-label {
+            text-align: center;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .tech-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .tech-item {
+            padding: 9px 16px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.025);
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 85px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 43px;
+        }
+
+        .section-label {
+            color: #a99aff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 13px;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(29px, 4vw, 40px);
+            letter-spacing: -1.5px;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 580px;
+            margin: 13px auto 0;
+        }
+
+        /* FEATURE CARDS */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
+        }
+
+        .feature-card {
+            padding: 27px;
+            background: linear-gradient(145deg, #111b30, #0d1425);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 124, 255, 0.5);
+            background: #131e35;
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+            background: rgba(139, 124, 255, 0.13);
+            margin-bottom: 21px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        /* HOW IT WORKS */
+
+        .workflow {
+            background: rgba(255,255,255,0.015);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .workflow-card {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface);
+            position: relative;
+        }
+
+        .step-number {
+            color: #9b8cff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
+
+        .workflow-card h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .workflow-card p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* API ENDPOINTS */
+
+        .endpoint-list {
+            max-width: 780px;
+            margin: auto;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .endpoint {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 17px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .endpoint:last-child {
+            border-bottom: none;
+        }
+
+        .endpoint:hover {
+            background: var(--surface-light);
+        }
+
+        .endpoint-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .endpoint-path {
+            font-family: monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+
+        .endpoint-description {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .method {
+            min-width: 65px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 6px 9px;
+            border-radius: 5px;
+        }
+
+        .get {
+            color: #6ee7b7;
+            background: rgba(16,185,129,0.12);
+        }
+
+        .post {
+            color: #93c5fd;
+            background: rgba(59,130,246,0.13);
+        }
+
+        /* CTA */
+
+        .cta {
+            padding: 65px 35px;
+            text-align: center;
+            border: 1px solid rgba(139,124,255,0.3);
+            border-radius: 18px;
+            background:
+                radial-gradient(ellipse at 50% 120%, rgba(95,76,220,0.28), transparent 65%),
+                linear-gradient(135deg, #151d37, #11172a);
+        }
+
+        .cta h2 {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .cta p {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 15px auto 25px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .workflow-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                height: 68px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.nav-button) {
+                display: none;
+            }
+
+            .hero {
+                padding: 75px 0 65px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+
+            .feature-grid,
+            .workflow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .endpoint {
+                padding: 14px;
+            }
+
+            .endpoint-description {
+                max-width: 220px;
+            }
+
+            .cta {
+                padding: 45px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container nav-content">
+            <a href="/" class="brand">
+                <span class="brand-icon">✦</span>
+                <span>Palm Mind<span style="color:#9b8cff">.</span></span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#workflow">Workflow</a>
+                <a href="#endpoints">API</a>
+                <a href="/health">Health</a>
+                <a href="/docs" class="nav-button">Explore API ↗</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="container hero-content">
+
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                AI-powered document intelligence
+            </div>
+
+            <h1>
+                Turn documents into
+                <span class="gradient-text">intelligent conversations.</span>
+            </h1>
+
+            <p class="hero-description">
+                Palm Mind combines semantic search, Retrieval-Augmented
+                Generation, and conversational AI to make document
+                knowledge accessible, contextual, and actionable.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/docs" class="button button-primary">
+                    Explore API Documentation ↗
+                </a>
+
+                <a href="#features" class="button button-secondary">
+                    Discover Capabilities ↓
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- TECHNOLOGY STACK -->
+    <div class="tech-strip">
+        <div class="container">
+            <p class="tech-label">Built with modern AI infrastructure</p>
+
+            <div class="tech-list">
+                <span class="tech-item">FastAPI</span>
+                <span class="tech-item">Google Gemini</span>
+                <span class="tech-item">Sentence Transformers</span>
+                <span class="tech-item">Qdrant</span>
+                <span class="tech-item">PostgreSQL</span>
+                <span class="tech-item">Redis</span>
+                <span class="tech-item">Python</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="container">
+
+            <div class="section-heading">
+                <div class="section-label">Core capabilities</div>
+                <h2>More than document storage.</h2>
+                <p class="section-description">
+                    A modular backend designed to transform unstructured
+                    documents into searchable knowledge and useful actions.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>Document Ingestion</h3>
+                    <p>
+                        Upload PDF and TXT documents, extract their content,
+                        and divide text into meaningful chunks using
+                        configurable chunking strategies.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🔎</div>
+                    <h3>Semantic Search</h3>
+                    <p>
+                        Generate vector embeddings and retrieve relevant
+                        document passages through similarity search
+                        powered by Qdrant.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Conversational RAG</h3>
+                    <p>
+                        Generate context-aware answers using retrieved
+                        document content and Google's Gemini models.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Multi-turn Memory</h3>
+                    <p>
+                        Maintain conversation context across multiple
+                        questions using Redis-backed chat history and
+                        contextual query rewriting.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Interview Booking</h3>
+                    <p>
+                        Extract candidate details, email, interview date,
+                        and time from conversations using AI-powered
+                        structured information extraction.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Persistent Data</h3>
+                    <p>
+                        Store document metadata and booking records in
+                        PostgreSQL while maintaining vector data in
+                        a dedicated vector database.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- WORKFLOW -->
+    <section class="workflow" id="workflow">
+        <div class="container">
+
+            <div class="section-heading">
+                <div class="section-label">How it works</div>
+                <h2>From raw files to intelligent results.</h2>
+                <p class="section-description">
+                    A structured pipeline connecting document processing,
+                    vector retrieval, language models, and persistent memory.
+                </p>
+            </div>
+
+            <div class="workflow-grid">
+
+                <article class="workflow-card">
+                    <div class="step-number">01 / INGEST</div>
+                    <h3>Upload Documents</h3>
+                    <p>
+                        Extract text from PDF or TXT files and
+                        split content into manageable chunks.
+                    </p>
+                </article>
+
+                <article class="workflow-card">
+                    <div class="step-number">02 / INDEX</div>
+                    <h3>Generate Embeddings</h3>
+                    <p>
+                        Convert text chunks into vector embeddings
+                        and store them in Qdrant.
+                    </p>
+                </article>
+
+                <article class="workflow-card">
+                    <div class="step-number">03 / RETRIEVE</div>
+                    <h3>Ask Questions</h3>
+                    <p>
+                        Retrieve relevant passages and generate
+                        contextual responses using Gemini.
+                    </p>
+                </article>
+
+                <article class="workflow-card">
+                    <div class="step-number">04 / ACT</div>
+                    <h3>Extract & Store</h3>
+                    <p>
+                        Extract interview information and save
+                        confirmed booking requests in PostgreSQL.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- API ENDPOINTS -->
+    <section id="endpoints">
+        <div class="container">
+
+            <div class="section-heading">
+                <div class="section-label">Developer interface</div>
+                <h2>Explore the API.</h2>
+                <p class="section-description">
+                    Access the backend through documented REST endpoints.
+                    Open Swagger UI to inspect and test requests.
+                </p>
+            </div>
+
+            <div class="endpoint-list">
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/</span>
+                        <span class="endpoint-description">API landing page</span>
+                    </div>
+                    <span class="method get">GET</span>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/health</span>
+                        <span class="endpoint-description">Health check</span>
+                    </div>
+                    <span class="method get">GET</span>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/documents/upload</span>
+                        <span class="endpoint-description">Upload and process documents</span>
+                    </div>
+                    <span class="method post">POST</span>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/chat/</span>
+                        <span class="endpoint-description">Conversational RAG</span>
+                    </div>
+                    <span class="method post">POST</span>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/bookings/extract</span>
+                        <span class="endpoint-description">Extract interview details</span>
+                    </div>
+                    <span class="method post">POST</span>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-info">
+                        <span class="endpoint-path">/bookings/confirm</span>
+                        <span class="endpoint-description">Confirm and persist booking request</span>
+                    </div>
+                    <span class="method post">POST</span>
+                </div>
+
+            </div>
+
+            <div style="text-align:center; margin-top:25px">
+                <a href="/docs" class="button button-primary">
+                    Open Interactive Swagger Docs ↗
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding-top:10px">
+        <div class="container">
+            <div class="cta">
+                <div class="section-label">Ready to explore?</div>
+
+                <h2>
+                    Build smarter experiences with
+                    <span class="gradient-text">document intelligence.</span>
+                </h2>
+
+                <p>
+                    Explore the API documentation and start testing
+                    Palm Mind's capabilities.
+                </p>
+
+                <a href="/docs" class="button button-primary">
+                    Get Started with the API ↗
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                © 2026 Palm Mind. AI-powered document intelligence.
+            </div>
+
+            <div class="footer-links">
+                <a href="/docs">API Docs</a>
+                <a href="/redoc">ReDoc</a>
+                <a href="/health">Health</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
