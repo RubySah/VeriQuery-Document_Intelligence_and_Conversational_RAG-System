@@ -457,9 +457,3 @@ set RUN_LIVE_GEMINI=
 **Ruby Kumari Sah**
 
 Developed as an AI/ML backend engineering project.
-
----
-
-## License
-
-Add a license file before distributing this project under an open-source license.
