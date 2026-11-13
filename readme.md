@@ -125,7 +125,7 @@ For detailed component descriptions and workflow diagrams, see [ARCHITECTURE.md]
 
 ---
 
-
+```text
 palmind-rag-backend/
 │
 ├── app/
@@ -190,6 +190,8 @@ palmind-rag-backend/
 ├── .gitignore
 ├── README.md
 └── ARCHITECTURE.md
+
+```
 ---
 
 ## Getting Started
