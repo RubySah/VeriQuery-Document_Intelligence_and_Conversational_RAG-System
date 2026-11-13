@@ -77,7 +77,7 @@ flowchart TB
 ### Workflow
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Upload PDF or TXT] --> B[Validate File Type]
     B --> C[Create Processing Record in PostgreSQL]
     C --> D[Extract Text]
@@ -145,7 +145,7 @@ The corresponding vector is stored alongside this payload.
 ### Workflow
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[User Question] --> B[Load Conversation History from Redis]
     B --> C{Existing Conversation?}
     C -->|Yes| D[Rewrite Follow-up Question]
