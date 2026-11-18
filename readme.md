@@ -1,5 +1,4 @@
-
-# Palm Mind — AI-Powered Document Intelligence & Conversational RAG
+# VeriQuery — AI-Powered Document Intelligence & Conversational RAG
 
 An AI-powered document intelligence backend that transforms uploaded documents into searchable knowledge and enables context-aware conversations using Retrieval-Augmented Generation (RAG).
 
@@ -18,7 +17,7 @@ Built with **FastAPI, Google Gemini, Sentence Transformers, Qdrant, PostgreSQL, 
 
 ## Overview
 
-Palm Mind is a modular backend application designed to make document-based information retrieval more intelligent and interactive.
+VeriQuery is a modular backend application designed to make document-based information retrieval more intelligent and interactive.
 
 Users can upload PDF or TXT documents, which are processed into smaller chunks, converted into vector embeddings, and stored in a vector database. The system retrieves relevant information based on user queries and generates context-aware responses using Google Gemini.
 
