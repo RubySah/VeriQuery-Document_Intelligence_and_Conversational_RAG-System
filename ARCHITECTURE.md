@@ -1,9 +1,8 @@
-
-# Palm Mind — System Architecture
+# VeriQuery — System Architecture
 
 ## 1. Architecture Overview
 
-Palm Mind follows a modular backend architecture built around FastAPI. The application separates API routing, business logic, data validation, and infrastructure integrations.
+VeriQuery follows a modular backend architecture built around FastAPI. The application separates API routing, business logic, data validation, and infrastructure integrations.
 
 The system consists of four major workflows:
 
