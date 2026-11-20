@@ -412,6 +412,6 @@ Potential improvements include:
 
 ## Summary
 
-Palm Mind combines document processing, semantic retrieval, conversational AI, and structured information extraction in a modular backend architecture.
+VeryQuery combines document processing, semantic retrieval, conversational AI, and structured information extraction in a modular backend architecture.
 
 The separation of relational storage, vector search, and conversation memory allows each component to serve its intended purpose while keeping the application maintainable and testable.
